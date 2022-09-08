@@ -1,6 +1,10 @@
+import math
+
 import torch
 import cv2
+
 from webcam import logic
+import settings
 
 
 class ObjectDetection:
@@ -21,7 +25,7 @@ class ObjectDetection:
         """
         self.model = self.load_model()
         self.model.conf = 0.3 # set inference threshold at 0.3
-        self.model.iou = 0.3 # set inference IOU threshold at 0.3
+        self.model.iou = settings.IOU_THRESHOLD # set inference IOU threshold at 0.3
         self.model.classes = [0] # set model to only detect "Person" class
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -31,10 +35,7 @@ class ObjectDetection:
         :param self:  class object
         :return:  OpenCV object to stream video frame by frame.
         """
-        cap = cv2.VideoCapture(
-            "IMG_1083.mov"
-            # 0
-        )
+        cap = cv2.VideoCapture(settings.VIDEO_INPUT)
         self.width  = cap.get(cv2.CAP_PROP_FRAME_WIDTH)   # float `width`
         self.height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)  # float `height`
         assert cap is not None
@@ -87,13 +88,26 @@ class ObjectDetection:
 
         player = self.get_video_from_file() # create streaming service for application
         assert player.isOpened()
+        frame_rate = player.get(cv2.CAP_PROP_FPS)
         x_shape = int(player.get(cv2.CAP_PROP_FRAME_WIDTH))
         y_shape = int(player.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        fps = settings.CAM_FMS
+        if fps > frame_rate:
+            fps = frame_rate
+
+        current_frame = 0
 
         while True:
             ret, frame = player.read()
             if not ret:
                 break
+
+            current_frame += 1
+            if current_frame % (math.floor(frame_rate / fps)) != 0:
+                cv2.imshow('video', frame)
+                continue
+
             results = self.score_frame(frame)
 
             _, cord = results
@@ -102,7 +116,7 @@ class ObjectDetection:
             faces = []
             for row in cord:
                 x1, y1, x2, y2 = int(row[0]*x_shape), int(row[1]*y_shape), int(row[2]*x_shape), int(row[3]*y_shape)
-                faces.append([frame, x1,y1,x2-x1, y2-y1])
+                faces.append([frame, x1, y1, x2-x1, y2-y1])
             logic(faces, self.width, self.height)
 
             frame = self.plot_boxes(results, frame)
