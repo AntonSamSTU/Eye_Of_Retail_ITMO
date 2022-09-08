@@ -88,7 +88,10 @@ def logic(faces, width, height):
             shop_name=settings.SHOP_NAME,
             emotion=max(set(emotions), key=emotions.count)
         )
-        act.save(index=settings.ELK_INDEX)
+        try:
+            act.save(index=settings.ELK_INDEX)
+        except Exception:
+            print('Error when sending a `visitor` to analytics')
 
 
 
