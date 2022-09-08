@@ -1,0 +1,6 @@
+__pycache__/
+*.pt
+*.mov
+*.jpg
+
+faces/

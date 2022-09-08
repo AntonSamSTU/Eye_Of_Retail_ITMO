@@ -1,9 +1,6 @@
-
 import torch
-import numpy as np
 import cv2
-from time import time
-import sys
+from webcam import logic
 
 
 class ObjectDetection:
@@ -34,7 +31,12 @@ class ObjectDetection:
         :param self:  class object
         :return:  OpenCV object to stream video frame by frame.
         """
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(
+            "IMG_1083.mov"
+            # 0
+        )
+        self.width  = cap.get(cv2.CAP_PROP_FRAME_WIDTH)   # float `width`
+        self.height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)  # float `height`
         assert cap is not None
         return cap
 
@@ -73,10 +75,11 @@ class ObjectDetection:
             x1, y1, x2, y2 = int(row[0]*x_shape), int(row[1]*y_shape), int(row[2]*x_shape), int(row[3]*y_shape)
             bgr = (0, 0, 255)
             cv2.rectangle(frame, (x1, y1), (x2, y2), bgr, 1)
-       
-            cv2.putText(frame, f"Total Targets: {n}", (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-        return (x1, y1), (x2, y2)
+            cv2.putText(frame, f"Total Targets: {n}", (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.imshow('video', frame)
+
+        return frame
 
     def __call__(self):
 
@@ -88,25 +91,28 @@ class ObjectDetection:
         y_shape = int(player.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
         while True:
-
             ret, frame = player.read()
             if not ret:
                 break
             results = self.score_frame(frame)
+
+            _, cord = results
+            x_shape, y_shape = frame.shape[1], frame.shape[0]
+
+            faces = []
+            for row in cord:
+                x1, y1, x2, y2 = int(row[0]*x_shape), int(row[1]*y_shape), int(row[2]*x_shape), int(row[3]*y_shape)
+                faces.append([frame, x1,y1,x2-x1, y2-y1])
+            logic(faces, self.width, self.height)
+
             frame = self.plot_boxes(results, frame)
 
-
-
-            
-
-# When everything done, release the capture
         player.release()
 
         # finally, close the window
         cv2.destroyAllWindows()
         cv2.waitKey(10)
-        
 
-
-a = ObjectDetection()
-a()
+if __name__ == '__main__':
+    a = ObjectDetection()
+    a()
