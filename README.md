@@ -9,4 +9,4 @@ python3 yolo.py
 ```
 
 ## Project status
-MVP for hack
+MVP for hackaton
