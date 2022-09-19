@@ -12,6 +12,12 @@ python3 yolo.py
 MVP for hackaton
 
 ## About this project  
-Here are a programm system for retail which provide getting emotional feedback from customers and collect it in statistics  
+Eye of Retail is a CV project that provides business (cafe, grocery for example)
+track customer's emotional feedback.
+The project has been developed by our team "post-AIrony" within product huckaton
+DataProductHack (https://ai.itmo.ru/dataproducthack).
+
+Our decesion uses yolo5n model for tracking people and deepface technology for identify human emotion. We used NoSQL DB Elastic Search for containing the data and Kibana for visualisation.
+
 used stack - python(openCV & deepface lib.), elastic search, kibana  
-demo - https://docs.google.com/presentation/d/1DbPLfpapLt_TFfGvdyuVqu4J5v-PH0ZQD6DIcT_bTyU/edit?usp=sharing  
+presentation - https://docs.google.com/presentation/d/1DbPLfpapLt_TFfGvdyuVqu4J5v-PH0ZQD6DIcT_bTyU/edit?usp=sharing 

@@ -45,7 +45,7 @@ class ObjectDetection:
         """
         Function loads the yolo5 model from PyTorch Hub.
         """
-        model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+        model = torch.hub.load('ultralytics/yolov5', 'yolov5n', pretrained=True)
         return model
 
     def score_frame(self, frame):
