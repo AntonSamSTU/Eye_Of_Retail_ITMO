@@ -12,7 +12,7 @@ python3 yolo.py
 MVP for hackaton
 
 ## About this project  
-Eye of Retail is a CV project that provides business (cafe, grocery for example)
+Eye of Retail is a CV project that provides business (for example cafe, grocery etc)
 track customer's emotional feedback.
 The project has been developed by our team "post-AIrony" within product huckaton
 DataProductHack (https://ai.itmo.ru/dataproducthack).
@@ -21,3 +21,14 @@ Our decesion uses yolo5n model for tracking people and deepface technology for i
 
 used stack - python(openCV & deepface lib.), elastic search, kibana  
 presentation - https://docs.google.com/presentation/d/1DbPLfpapLt_TFfGvdyuVqu4J5v-PH0ZQD6DIcT_bTyU/edit?usp=sharing 
+
+
+## About our team 
+We are first year master students at Saint-Petersburg ITMO University.
+Our studing track is "Machine-learning Engeneering".
+
+Here we are:
+https://github.com/antonbugaets
+https://github.com/Klaasibub
+https://github.com/lazutinN
+https://github.com/smeyanoff
