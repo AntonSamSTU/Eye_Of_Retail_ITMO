@@ -29,6 +29,9 @@ Our studing track is "Machine-learning Engeneering".
 
 Here we are:
 https://github.com/antonbugaets
+
 https://github.com/Klaasibub
+
 https://github.com/lazutinN
+
 https://github.com/smeyanoff
