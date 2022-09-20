@@ -102,7 +102,7 @@ if __name__ == '__main__':
     if not face_cascade.load(cv2.samples.findFile(face_cascade_name)):  # adding a fallback event
         print("Error loading xml file")
 
-    video = cv2.VideoCapture(settings.VIDEO_CAPTURE)  #requisting the input from the webcam or camera
+    video = cv2.VideoCapture(settings.VIDEO_INPUT)  #requisting the input from the webcam or camera
     # checking if are getting video feed and using it
 
     frame_rate = video.get(cv2.CAP_PROP_FPS)
